@@ -19,13 +19,14 @@ class JianshuSpider(CrawlSpider):
 
     # 数据测试：scrapy shell https://www.jianshu.com/p/8d5ab6d5f258
     def parse_detail(self, response):
-        title = response.xpath('//h1[@class="title"]/text()').get()
+        title = response.xpath('//h1[@class="_2zeTMs"]/text()').get()
 
-        author = response.xpath('//div[@class="info"]/span/a/text()').get()
+        author = response.xpath('//span[@class="_22gUMi"]/text()').get()
 
-        avatar = self.HTTPS + response.xpath('//div[@class="author"]/a/img/@src').get()
+        avatar = self.HTTPS + response.xpath('//a[@class="qzhJKO"]/@href').get()
 
-        pub_time = response.xpath('//span[@class="publish-time"]/text()').get().replace("*", "")
+        pub_time = '2020-01-01 00:00:00'
+        #response.xpath('//span[@class="publish-time"]/text()').get().replace("*", "")
 
         current_url = response.url
         real_url = current_url.split(r"?")[0]
@@ -33,7 +34,7 @@ class JianshuSpider(CrawlSpider):
         article_id = real_url.split(r'/')[-1]
 
         # 保留标签的H5内容[保留格式，方便后面排版]
-        content = response.xpath('//div[@class="show-content"]').get()
+        content = response.xpath('//article[@class="_2rhmJa"]').get()
 
         item = ArticleItem(
             title=title,
